@@ -14,7 +14,10 @@ class PullRequest < ApplicationRecord
             allow_nil: false
 
   belongs_to :author, foreign_key: 'author_id', class_name: 'Engineer'
-  belongs_to :reviewer, foreign_key: 'reviewer_id', class_name: 'Engineer'
+  belongs_to :reviewer,
+              foreign_key: 'reviewer_id',
+              class_name: 'Engineer',
+              optional: true
 
   def mark_as_review_ready
     transition all_states - [:review_ready] => :review_ready

@@ -1,12 +1,12 @@
-class PullRequestParams
+class PayloadParams
   attr_reader :action, :label, :number, :pull_request, :repository
 
   def initialize(params)
     @json_params = JSON.parse(params.require(:payload))
 
-    @action ||= @json_params[:action]
+    @action ||= @json_params['action']
     @label ||= @json_params.dig('label', 'name')
-    @number ||= @json_params[:number]
+    @number ||= @json_params['number']
     @repository ||= @json_params.dig('repository', 'name')
 
     @pull_request = {}
