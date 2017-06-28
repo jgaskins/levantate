@@ -31,12 +31,23 @@ module PullRequestOperations
       else
         pp "I don't recognize the action: #{action}"
       end
+
+      ActionCable.server.broadcast('pull_request_update', body: body)
     end
 
     private
 
     def action
       @action ||= @params.action
+    end
+
+    def body
+      pr.as_json(
+        include: {
+          author: { only: [:login, :avatar_url] },
+          reviewer: { only: [:login, :avatar_url] },
+        }
+      )
     end
 
     def label

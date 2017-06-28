@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import moment from 'moment-timezone';
 
 import View from './view';
-//import PullRequestChannel from '../channels/pull-requests';
+import PullRequestsChannel from '../../channels/pull-requests';
 
 import { getPullRequests } from '../../utils/api';
 
 const mapPR = (pr) => ({
   ...pr,
   createdAt: moment(pr.createdAt),
-  awaitingReviewSince: pr.awaiting_review_since && moment(pr.awaiting_review_since),
+  awaitingReviewSince: pr.awaitingReviewSince && moment(pr.awaitingReviewSince),
 });
 
 const mapPullRequests = (prs) => (
@@ -45,8 +45,8 @@ class PullRequestDashboard extends Component {
         });
       });
 
-    //this.dataChannel = new PullRequestsChannel();
-    //this.dataChannel.subscribe(this.updatePR);
+    this.dataChannel = new PullRequestsChannel();
+    this.dataChannel.subscribe(this.updatePR);
   }
 
   updatePR = (pr) => {

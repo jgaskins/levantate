@@ -24,7 +24,7 @@ class PullRequest < ApplicationRecord
   end
 
   def unmark_as_review_ready
-    transition review_ready: :in_progress
+    transition_success = transition review_ready: :in_progress
   end
 
   def open_pr
