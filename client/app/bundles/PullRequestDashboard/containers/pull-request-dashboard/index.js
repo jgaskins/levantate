@@ -50,6 +50,7 @@ class PullRequestDashboard extends Component {
   }
 
   updatePR = (pr) => {
+    console.log(`updating pr: ${pr}`);
     const { pullRequests } = this.state;
 
     this.setState({ pullRequests: { ...pullRequests, [pr.id]: mapPR(pr) } });
