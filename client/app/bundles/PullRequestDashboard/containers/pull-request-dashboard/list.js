@@ -53,19 +53,15 @@ const styles = {
     justifyContent: 'center',
   }),
   title: css({
-    color: PRIMARY_FONT_COLOR,
-    fontWeight: 100,
     margin: 0,
     textAlign: 'center',
     width: '100%',
   }),
   titleContainer: css({
     color: PRIMARY_FONT_COLOR,
-    fontSize: '2em',
+    fontSize: '3vh',
+    fontWeight: 100,
     padding: '1.5em',
-    '@media(max-width: 414px)': {
-      fontSize: '1.5em',
-    },
   }),
 };
 

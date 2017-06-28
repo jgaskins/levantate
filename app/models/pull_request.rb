@@ -40,7 +40,8 @@ class PullRequest < ApplicationRecord
   end
 
   def unassign
-    transition in_review: :review_ready
+    transition_success = transition in_review: :review_ready
+    update(reviewer: nil) if transition_success
   end
 
   def transition(transition)

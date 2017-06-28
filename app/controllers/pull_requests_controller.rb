@@ -31,18 +31,21 @@ class PullRequestsController < ApplicationController
       end
     end
 
-    pr = PullRequest.find_or_create_by(number: payload_params.number) do |new_pr|
-      new_pr.title = payload_params.pull_request[:title]
-      new_pr.author = author
-      new_pr.url = payload_params.pull_request[:url]
-      new_pr.repo = payload_params.repository
+    if payload_params.number
+      pr = PullRequest.find_or_create_by(number: payload_params.number) do |new_pr|
+        new_pr.title = payload_params.pull_request[:title]
+        new_pr.author = author
+        new_pr.url = payload_params.pull_request[:url]
+        new_pr.repo = payload_params.repository
+      end
+
+      pr.update(reviewer: reviewer) if reviewer && pr.reviewer.nil?
+
+      PullRequestOperations::AssessPayload.run(pr, payload_params) if pr
     end
 
-    pr.update(reviewer: reviewer) if reviewer && pr.reviewer.nil?
 
-    #PullRequestOperations::AssessPayload.run(pr, payload_params) if pr
-
-    render json: { pr: pr.reload }, status: :ok
+    render json: {}, status: :ok
   end
 
   private

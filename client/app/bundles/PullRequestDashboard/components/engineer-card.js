@@ -46,12 +46,12 @@ const styles = {
     padding: '1em',
   }),
   detail: css({
-    fontSize: '1em',
+    fontSize: '1vw',
     margin: '1em 0',
   }),
   role: css({
     fontWeight: 100,
-    fontSize: '1.1em',
+    fontSize: '1.7vw',
     marginBottom: '0.5em',
     textAlign: 'center',
     width: '100%',

@@ -44,10 +44,10 @@ const Item = ({
       <p { ...styles.repo }>{ repo && getRepoAbbr(repo) }</p>
 
       <div { ...styles.prDetails }>
-        <p { ...styles.title }>
-          <span { ...styles.number }>{ number ? `#${number}` : '' }</span>
-          <span { ...styles.titleText }>{ title }</span>
-        </p>
+        <div { ...styles.title }>
+          <p { ...styles.number }>{ number ? `#${number}` : '' }</p>
+          <p { ...styles.titleText }>{ title }</p>
+        </div>
 
         <div { ...styles.divider }/>
       </div>
@@ -94,7 +94,9 @@ const styles = {
     width: '100%',
   }),
   number: css({
+    display: 'inline-block',
     color: SECONDARY,
+    margin: 0,
   }),
   prContainer: css({
     display: 'flex',
@@ -109,17 +111,18 @@ const styles = {
   }),
   repo: css({
     color: SECONDARY,
-    fontSize: '1.5em',
+    fontSize: '2.5vw',
     fontWeight: 100,
     color: SECONDARY,
-    margin: '0 1em 0 0',
-    padding: '2em',
+    margin: '0 1vw 0 0',
+    padding: '4vw',
   }),
   title: css({
-    fontSize: '1.1em',
+    fontSize: '1.5vw',
     fontWeight: 400,
   }),
   titleText: css({
+    display: 'inline-block',
     fontWeight: 500,
     margin: '0 0 0 0.5em',
   }),
