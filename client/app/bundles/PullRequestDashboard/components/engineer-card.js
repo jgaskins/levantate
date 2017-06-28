@@ -17,7 +17,7 @@ const EngineerCard = ({ avatar, login, role }) => (
 
 EngineerCard.propTypes = {
   avatar: PropTypes.string,
-  login: PropTypes.string,
+  login: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   role: PropTypes.string,
 };
 

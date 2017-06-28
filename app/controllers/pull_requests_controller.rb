@@ -35,7 +35,7 @@ class PullRequestsController < ApplicationController
       new_pr.title = payload_params.pull_request[:title]
       new_pr.author = author
       new_pr.url = payload_params.pull_request[:url]
-      new_pr.repo = payload_params.pull_request[:repository]
+      new_pr.repo = payload_params.repository
     end
 
     pr.update(reviewer: reviewer) if reviewer && pr.reviewer.nil?

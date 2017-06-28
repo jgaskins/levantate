@@ -1,10 +1,10 @@
 class PullRequest < ApplicationRecord
-  enum state: {
-    in_progress: 0,
-    review_ready: 1,
-    in_review: 2,
-    does_not_need_review: 3,
-  }
+  enum state: [
+    :in_progress,
+    :review_ready,
+    :in_review,
+    :does_not_need_review,
+  ]
 
   validates_presence_of :author, :title
   validates :number,
