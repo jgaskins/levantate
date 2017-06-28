@@ -21,6 +21,9 @@ class PullRequestsController < ApplicationController
   end
 
   def payload
+    raise "Signatures don't match!" unless verify_signature
+
+
     author = Engineer.find_or_create_by(login: payload_params.pull_request[:author]) do |eng|
       eng.avatar_url = payload_params.pull_request[:author_image_url]
     end
@@ -52,5 +55,14 @@ class PullRequestsController < ApplicationController
 
   def payload_params
     @payload_params ||= PayloadParams.new(params)
+  end
+
+  def verify_signature
+    payload_body = request.body
+    signature = 'sha1=' + OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha1'),
+                                                  ENV['SECRET_TOKEN'] || '',
+                                                  payload_body.read)
+
+    Rack::Utils.secure_compare(signature, request.env['HTTP_X_HUB_SIGNATURE'])
   end
 end

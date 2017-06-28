@@ -48,6 +48,7 @@ group :development, :test do
   gem 'rspec-json_expectations'
   gem 'pundit-matchers'
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'dotenv-rails'
 end
 
 group :development do
