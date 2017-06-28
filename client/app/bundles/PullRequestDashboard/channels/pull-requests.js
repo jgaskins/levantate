@@ -12,11 +12,9 @@ export default function PullRequestsChannel() {
   App.cable.subscriptions.create(
     'PullRequestsChannel',
     {
-      connected: () => { console.log('connected to PR Channel'); },
+      connected: () => {},
       received: ({ body: json }) => {
         const pr = camelize(json);
-
-        console.log(`Received: ${pr}`);
 
         this.subscriptions.forEach((cb) => cb(pr));
       },

@@ -14,7 +14,6 @@ const mapPR = (pr) => ({
 
 const mapPullRequests = (prs) => (
   prs.reduce((all, pr) => {
-    console.log(pr);
     all[pr.id] = mapPR(pr);
     return all;
   }, {})
@@ -37,7 +36,6 @@ class PullRequestDashboard extends Component {
           pullRequests: mapPullRequests(pullRequests),
         });
       }).catch(error => {
-        console.warn(error);
 
         this.setState({
           error: 'There was an error getting the Pull Requests.',
@@ -50,7 +48,6 @@ class PullRequestDashboard extends Component {
   }
 
   updatePR = (pr) => {
-    console.log(`updating pr: ${pr}`);
     const { pullRequests } = this.state;
 
     this.setState({ pullRequests: { ...pullRequests, [pr.id]: mapPR(pr) } });
