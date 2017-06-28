@@ -1,5 +1,4 @@
 .DS_Store
-.env
 log/
 tmp/
 # React on Rails

@@ -55,5 +55,3 @@ dashboard view.
 ## Deployment instructions
 - Precompile assets by running: `rails assets:precompile`
 - Push up to GitHub: `git push`
-- Push up to heroku: `git push heroku master`
-- Migrate heroku if a migration was added: `heroku run rails db:migrate`
