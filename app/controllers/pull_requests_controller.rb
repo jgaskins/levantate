@@ -45,9 +45,14 @@ class PullRequestsController < ApplicationController
         new_pr.repo = payload_params.repository
       end
 
+      ## Remove after all PRs have been updated
+      old_pr = PullRequest.where(number: payload_params.number, github_id: nil)
+      old_pr.first.destroy if old_pr.any?
+
       pr.update(reviewer: reviewer) if reviewer && pr.reviewer.nil?
 
       PullRequestOperations::AssessPayload.run(pr, payload_params) if pr
+    else
     end
 
 
