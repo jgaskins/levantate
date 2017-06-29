@@ -44,7 +44,8 @@ const styles = {
     borderRadius: 3,
     boxShadow: '1px 2px 4px 0px rgba(0, 0, 0, 0.10)',
     flexDirection: 'column',
-    margin: 20,
+    margin: '20px auto',
+    maxWidth: '900px',
   }),
   loading: css({
     alignItems: 'center',

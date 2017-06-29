@@ -77,13 +77,14 @@ const styles = {
   container: css({
     alignItems: 'center',
     backgroundColor: CONTENT_BACKGROUND,
+    borderRadius: 3,
     color: PRIMARY_FONT_COLOR,
     cursor: 'pointer',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     textDecoration: 'none',
-    padding: '1em 1em 1em 0',
+    padding: '0.6em 0',
     ':hover': {
       backgroundColor: HIGHLIGHTED_BACKGROUND,
     },
@@ -111,14 +112,14 @@ const styles = {
   }),
   repo: css({
     color: SECONDARY,
-    fontSize: '2.5vw',
+    fontSize: '2.5vh',
     fontWeight: 100,
     color: SECONDARY,
-    margin: '0 1vw 0 0',
-    padding: '4vw',
+    margin: 'auto 1vw auto 0',
+    padding: '0 2.5vw',
   }),
   title: css({
-    fontSize: '1.5vw',
+    fontSize: '1.5vh',
     fontWeight: 400,
   }),
   titleText: css({
