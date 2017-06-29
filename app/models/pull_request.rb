@@ -7,9 +7,9 @@ class PullRequest < ApplicationRecord
   ]
 
   validates_presence_of :author, :title
+  validates :github_id, presence: true, uniqueness: true
   validates :number,
             presence: true,
-            uniqueness: true,
             numericality: { only_integer: true, greater_than_or_equal_to: 1 },
             allow_nil: false
 

@@ -11,6 +11,8 @@ class PayloadParams
 
     @pull_request = {}
 
+    @pull_request[:github_id] = @json_params.dig('pull_request', 'id')
+
     author = @json_params.dig('pull_request', 'user')
     assignee = @json_params.dig('pull_request', 'assignee')
 

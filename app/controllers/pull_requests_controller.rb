@@ -34,8 +34,11 @@ class PullRequestsController < ApplicationController
       end
     end
 
-    if payload_params.number
-      pr = PullRequest.find_or_create_by(number: payload_params.number) do |new_pr|
+    github_id = payload_params.pull_request[:github_id]
+
+    if github_id
+      pr = PullRequest.find_or_create_by(github_id: github_id) do |new_pr|
+        new_pr.number = payload_params.number
         new_pr.title = payload_params.pull_request[:title]
         new_pr.author = author
         new_pr.url = payload_params.pull_request[:url]

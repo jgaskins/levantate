@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170623123155) do
+ActiveRecord::Schema.define(version: 20170629135510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20170623123155) do
 
   create_table "pull_requests", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "title"
-    t.integer  "number"
+    t.string   "number"
     t.string   "url"
     t.string   "repo"
     t.integer  "state",                 default: 0
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20170623123155) do
     t.uuid     "reviewer_id"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.string   "github_id"
     t.index ["author_id"], name: "index_pull_requests_on_author_id", using: :btree
     t.index ["reviewer_id"], name: "index_pull_requests_on_reviewer_id", using: :btree
   end
