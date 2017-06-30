@@ -62,10 +62,10 @@ const styles = {
   }),
   titleContainer: css({
     backgroundColor: HEADER_BACKGROUND,
-    color: PRIMARY_FONT_COLOR,
+    color: 'white',
     fontSize: '3vh',
     fontWeight: 100,
-    padding: '1.5em',
+    padding: '0.75em',
   }),
 };
 

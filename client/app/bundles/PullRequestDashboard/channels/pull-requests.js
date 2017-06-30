@@ -3,16 +3,15 @@ import camelize from 'camelize';
 export default function PullRequestsChannel() {
   this.subscriptions = [];
 
-  this.App || (this.App = {});
-
-  if (!this.App.cable) {
-    App.cable = ActionCable.createConsumer();
-  }
-
   App.cable.subscriptions.create(
     'PullRequestsChannel',
     {
-      connected: () => {},
+      connected: () => {
+        console.log('Connected to PullRequestsChannel. You\'ll receive live updates.');
+      },
+      disconnected: () => {
+        console.log('Disconnected from PullRequestsChannel. Reload browser...');
+      },
       received: ({ body: json }) => {
         const pr = camelize(json);
 

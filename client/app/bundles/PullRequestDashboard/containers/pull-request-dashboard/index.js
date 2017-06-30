@@ -22,7 +22,7 @@ const mapPullRequests = (prs) => (
 class PullRequestDashboard extends Component {
   state = {
     error: false,
-    loading: false,
+    loading: true,
     pullRequests: {},
   }
 
