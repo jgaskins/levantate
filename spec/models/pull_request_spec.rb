@@ -19,7 +19,6 @@ RSpec.describe PullRequest, type: :model do
     it { is_expected.to validate_presence_of(:author) }
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:number) }
-    it { is_expected.to validate_uniqueness_of(:number) }
     it { is_expected.to_not allow_values(nil).for(:number) }
     it {
       is_expected.to validate_numericality_of(:number)
@@ -85,6 +84,25 @@ RSpec.describe PullRequest, type: :model do
     end
   end
 
+  describe '#approve' do
+    subject(:approve) { pr.approve }
+
+    context 'unacceptable states' do
+      states = [:merge_ready]
+      unchanged_attributes = ['"state"', '"awaiting_review_since"']
+
+      include_examples 'unacceptable_state_events', states, unchanged_attributes
+    end
+
+    context 'acceptable states' do
+      states = pr_states - [:merge_ready]
+      changed_attributes = ['"state"']
+      additional_specs = { state: { to: 'merge_ready' } }
+
+      include_examples 'acceptable_state_events', states, changed_attributes, additional_specs
+    end
+  end
+
   describe '#open_pr' do
     subject(:open_pr) { pr.open_pr }
 
@@ -92,7 +110,7 @@ RSpec.describe PullRequest, type: :model do
       states = [:in_progress]
       unchanged_attributes = ['"state"', '"awaiting_review_since"']
 
-      it_behaves_like 'unacceptable_state_events', states, unchanged_attributes
+      include_examples 'unacceptable_state_events', states, unchanged_attributes
     end
 
     context 'acceptable states' do
@@ -105,17 +123,67 @@ RSpec.describe PullRequest, type: :model do
   end
 
   describe '#close_pr' do
+    subject(:close_pr) { pr.close_pr }
+
+    context 'unacceptable states' do
+      states = [:does_not_need_review]
+      unchanged_attributes = ['"state"', '"awaiting_review_since"']
+
+      include_examples 'unacceptable_state_events', states, unchanged_attributes
+    end
+
+    context 'acceptable states' do
+      states = pr_states - [:does_not_need_review]
+      changed_attributes = ['"state"']
+      additional_specs = { state: { to: 'does_not_need_review' } }
+
+      include_examples 'acceptable_state_events', states, changed_attributes, additional_specs
+    end
   end
 
   describe '#assign' do
+    subject(:assign) { pr.assign }
+
+    context 'unacceptable states' do
+      states = [:in_review]
+      unchanged_attributes = ['"state"', '"awaiting_review_since"']
+
+      include_examples 'unacceptable_state_events', states, unchanged_attributes
+    end
+
+    context 'acceptable states' do
+      states = pr_states - [:in_review]
+      changed_attributes = ['"state"']
+      additional_specs = { state: { to: 'does_not_need_review' } }
+
+      include_examples 'acceptable_state_events', states, changed_attributes, additional_specs
+    end
   end
 
   describe '#unassign' do
+    subject(:unassign) { pr.unassign }
+
+    context 'unacceptable states' do
+      states = pr_states - [:in_review]
+      unchanged_attributes = ['"state"', '"awaiting_review_since"']
+
+      include_examples 'unacceptable_state_events', states, unchanged_attributes
+    end
+
+    context 'acceptable states' do
+      states = [:in_review]
+      changed_attributes = ['"state"']
+      additional_specs = { state: { to: 'does_not_need_review' } }
+
+      include_examples 'acceptable_state_events', states, changed_attributes, additional_specs
+    end
   end
 
   describe '#transition' do
+    pending '#transition Tests'
   end
 
   describe '#all_states' do
+    pending '#all_states tests'
   end
 end

@@ -23,43 +23,53 @@ class PullRequestsController < ApplicationController
   def payload
     raise "Signatures don't match!" unless verify_signature
 
-
-    author = Engineer.find_or_create_by(login: payload_params.pull_request[:author]) do |eng|
-      eng.avatar_url = payload_params.pull_request[:author_image_url]
-    end
-
-    if payload_params.pull_request[:reviewer]
-      reviewer = Engineer.find_or_create_by(login: payload_params.pull_request[:reviewer]) do |eng|
-        eng.avatar_url = payload_params.pull_request[:reviewer_image_url]
-      end
-    end
-
-    github_id = payload_params.pull_request[:github_id]
-
-    if github_id
-      pr = PullRequest.find_or_create_by(github_id: github_id) do |new_pr|
-        new_pr.number = payload_params.number
-        new_pr.title = payload_params.pull_request[:title]
-        new_pr.author = author
-        new_pr.url = payload_params.pull_request[:url]
-        new_pr.repo = payload_params.repository
-      end
-
-      ## Remove after all PRs have been updated
-      old_pr = PullRequest.where(number: payload_params.number, github_id: nil)
-      old_pr.first.destroy if old_pr.any?
-
-      pr.update(reviewer: reviewer) if reviewer && pr.reviewer.nil?
-
-      PullRequestOperations::AssessPayload.run(pr, payload_params) if pr
-    else
-    end
-
+    PullRequestOperations::AssessPayload.run(pr, payload_params, review)
 
     render json: {}, status: :ok
   end
 
   private
+
+  def pr
+    pr_params = payload_params.pull_request
+
+    ## Remove after all PRs have been updated
+    old_pr = PullRequest.where(number: pr_params[:number], github_id: nil)
+    old_pr.first.destroy if old_pr.any?
+    ##
+
+    PullRequest.find_or_create_by(github_id: pr_params[:github_id]) do |new_pr|
+      new_pr.number = pr_params[:number]
+      new_pr.title = pr_params[:title]
+      new_pr.url = pr_params[:url]
+      new_pr.repo = pr_params[:repo]
+      new_pr.author = Engineer.find_or_create_by(login: pr_params[:author]) do |eng|
+        eng.avatar_url = pr_params[:author_image_url]
+      end
+      new_pr.reviewer = Engineer.find_or_create_by(login: pr_params[:reviewer]) do |eng|
+        eng.avatar_url = pr_params[:reviewer_image_url]
+      end
+    end
+  end
+
+  def review
+    review_params = payload_params.review
+
+    rev = Review.find_or_create_by(github_id: review_params[:github_id]) do |r|
+      r.submitted_at = review_params[:submitted_at]
+      r.url = review_params[:url]
+      r.pull_request = pr
+      r.author = Engineer.find_or_create_by(login: review_params[:author]) do |eng|
+        eng.avatar_url = review_params[:author_image_url]
+      end
+    end
+
+    rev.body = review_params[:body]
+    rev.state = review_params[:state]
+
+    rev.save
+    rev
+  end
 
   def payload_params
     @payload_params ||= PayloadParams.new(params)

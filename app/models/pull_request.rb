@@ -3,6 +3,7 @@ class PullRequest < ApplicationRecord
     :in_progress,
     :review_ready,
     :in_review,
+    :merge_ready,
     :does_not_need_review,
   ]
 
@@ -12,6 +13,8 @@ class PullRequest < ApplicationRecord
             presence: true,
             numericality: { only_integer: true, greater_than_or_equal_to: 1 },
             allow_nil: false
+
+  has_many :reviews
 
   belongs_to :author, foreign_key: 'author_id', class_name: 'Engineer'
   belongs_to :reviewer,
@@ -25,6 +28,10 @@ class PullRequest < ApplicationRecord
 
   def unmark_as_review_ready
     transition_success = transition review_ready: :in_progress
+  end
+
+  def approve
+    transition all_states - [:merge_ready] => :merge_ready
   end
 
   def open_pr

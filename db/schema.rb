@@ -40,6 +40,24 @@ ActiveRecord::Schema.define(version: 20170629135510) do
     t.index ["reviewer_id"], name: "index_pull_requests_on_reviewer_id", using: :btree
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "state",            default: 0
+    t.string   "github_id"
+    t.string   "url"
+    t.text     "body"
+    t.uuid     "author_id"
+    t.uuid     "pull_request_id"
+    t.uuid     "pull_requests_id"
+    t.datetime "submitted_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["author_id"], name: "index_reviews_on_author_id", using: :btree
+    t.index ["pull_request_id"], name: "index_reviews_on_pull_request_id", using: :btree
+    t.index ["pull_requests_id"], name: "index_reviews_on_pull_requests_id", using: :btree
+  end
+
   add_foreign_key "pull_requests", "engineers", column: "author_id"
   add_foreign_key "pull_requests", "engineers", column: "reviewer_id"
+  add_foreign_key "reviews", "engineers", column: "author_id"
+  add_foreign_key "reviews", "pull_requests"
 end

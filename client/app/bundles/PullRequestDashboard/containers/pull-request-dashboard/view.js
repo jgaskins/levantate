@@ -25,6 +25,12 @@ const View = ({ loading, pullRequests }) => {
       />
 
       <List
+        label="Ready For Merge"
+        loading={ loading }
+        pullRequests={ filter(pullRequests, { state: 'merge_ready' }) }
+      />
+
+      <List
         label="In Review"
         loading={ loading }
         pullRequests={ filter(pullRequests, { state: 'in_review' }) }

@@ -52,6 +52,11 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     padding: '0 1em',
+    width: '50px',
+    '@media(max-width: 414px)': {
+      padding: '0 0.5em',
+      width: '30px',
+    },
   }),
   detail: css({
     fontSize: '1vh',

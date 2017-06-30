@@ -21,7 +21,9 @@ const getRepoAbbr = (repo) => {
     abbr = abbr + word[0];
     const upperCase = word.slice(1).match(/([A-Z]+)/g);
 
-    if (upperCase) { upperCase.forEach((letter) => { abbr = abbr + letter; }); }
+    if (upperCase) {
+      upperCase.forEach((letter) => { abbr = abbr + letter; });
+    }
   });
 
   return abbr.toUpperCase();
@@ -56,13 +58,13 @@ const Item = ({
     <div { ...styles.usersContainer }>
       <EngineerCard
         avatar={ author && author.avatarUrl }
-        login={ (author && author.login) || <em>No Reviewer Yet.</em> }
+        login={ (author && author.login) || <em>No One</em> }
         role="Author"
       />
 
       <EngineerCard
         avatar={ reviewer && reviewer.avatarUrl }
-        login={ (reviewer && reviewer.login) || <em>No Reviewer Yet.</em> }
+        login={ (reviewer && reviewer.login) || <em>No One</em> }
         role="Reviewer"
       />
     </div>
