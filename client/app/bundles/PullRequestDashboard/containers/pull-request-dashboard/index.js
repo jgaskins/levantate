@@ -50,7 +50,10 @@ class PullRequestDashboard extends Component {
   updatePR = (pr) => {
     const { pullRequests } = this.state;
 
-    this.setState({ pullRequests: { ...pullRequests, [pr.id]: mapPR(pr) } });
+    this.setState((nextState) => ({
+      ...nextState,
+      pullRequests: { ...nextState.pullRequests, [pr.id]: mapPR(pr) }
+    }));
   }
 
   render() {
@@ -59,8 +62,6 @@ class PullRequestDashboard extends Component {
       loading,
       pullRequests,
     } = this.state;
-
-    if (error) { return <div>Could not fetch pull requests.</div>; }
 
     return (
       <View

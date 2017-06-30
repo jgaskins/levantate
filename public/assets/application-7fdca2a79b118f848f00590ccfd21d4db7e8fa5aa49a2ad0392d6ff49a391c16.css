@@ -1,0 +1,41 @@
+/*
+
+ */
+/* line 4, /Users/jlgarofalo/Dev/levantate/app/assets/stylesheets/pull_requests.scss */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0px;
+  background-color: #1F1F1F;
+}
+
+/* line 12, /Users/jlgarofalo/Dev/levantate/app/assets/stylesheets/pull_requests.scss */
+.header {
+  left: 0;
+  right: 0;
+  top: 0;
+  width: '100%';
+  z-index: 3;
+}
+
+/* line 20, /Users/jlgarofalo/Dev/levantate/app/assets/stylesheets/pull_requests.scss */
+.logo {
+  background-image: url("/fsociety.png");
+  height: '40px';
+  width: '40px';
+}
+
+/* line 26, /Users/jlgarofalo/Dev/levantate/app/assets/stylesheets/pull_requests.scss */
+.brand {
+  background-color: #353334;
+  border-bottom: 1px solid #16FD96;
+  color: #16FD96;
+  font-family: Megrim;
+  font-size: 2em;
+  font-weight: 100;
+  margin: auto;
+  padding: 15px 0;
+  text-align: center;
+  top: 0;
+}
