@@ -1,4 +1,10 @@
-# Levantate
+# Lev&aacute;ntate
+
+## Purpose: 
+This is an ancillary tool to help our engineering team optimize our collaboration
+& pull request life cycle process. It uses GitHub webhooks to automatically
+manage the life cycle of pull requests.
+
 ## To Run:
 - Pull down this repo.
 - Run `bundle && cd client && npm install` to download dependencies.
