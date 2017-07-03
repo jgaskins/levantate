@@ -38,18 +38,22 @@ class PullRequestsController < ApplicationController
     old_pr.first.destroy if old_pr.any?
     ##
 
-    PullRequest.find_or_create_by(github_id: pr_params[:github_id]) do |new_pr|
+    found_pr = PullRequest.find_or_create_by(github_id: pr_params[:github_id]) do |new_pr|
       new_pr.number = pr_params[:number]
-      new_pr.title = pr_params[:title]
       new_pr.url = pr_params[:url]
       new_pr.repo = pr_params[:repo]
       new_pr.author = Engineer.find_or_create_by(login: pr_params[:author]) do |eng|
         eng.avatar_url = pr_params[:author_image_url]
       end
-      new_pr.reviewer = Engineer.find_or_create_by(login: pr_params[:reviewer]) do |eng|
-        eng.avatar_url = pr_params[:reviewer_image_url]
-      end
     end
+
+    found_pr.title = pr_params[:title]
+    found_pr.reviewer = Engineer.find_or_create_by(login: pr_params[:reviewer]) do |eng|
+      eng.avatar_url = pr_params[:reviewer_image_url]
+    end
+
+    found_pr.save
+    found_pr
   end
 
   def review
