@@ -1,5 +1,6 @@
 class PullRequestsController < ApplicationController
   protect_from_forgery :except => [:payload]
+  #before_action :authenticate_user!, :except => [:payload]
 
   def index
   end
@@ -38,7 +39,7 @@ class PullRequestsController < ApplicationController
     old_pr.first.destroy if old_pr.any?
     ##
 
-    found_pr = PullRequest.find_or_create_by(github_id: pr_params[:github_id]) do |new_pr|
+    @pr = PullRequest.find_or_create_by(github_id: pr_params[:github_id]) do |new_pr|
       new_pr.number = pr_params[:number]
       new_pr.url = pr_params[:url]
       new_pr.repo = pr_params[:repo]
@@ -47,17 +48,19 @@ class PullRequestsController < ApplicationController
       end
     end
 
-    found_pr.title = pr_params[:title]
-    found_pr.reviewer = Engineer.find_or_create_by(login: pr_params[:reviewer]) do |eng|
+    @pr.title = pr_params[:title]
+    @pr.reviewer = Engineer.find_or_create_by(login: pr_params[:reviewer]) do |eng|
       eng.avatar_url = pr_params[:reviewer_image_url]
     end
 
-    found_pr.save
-    found_pr
+    @pr.save!
+    @pr
   end
 
   def review
     review_params = payload_params.review
+
+    return if review_params.empty?
 
     rev = Review.find_or_create_by(github_id: review_params[:github_id]) do |r|
       r.submitted_at = review_params[:submitted_at]
