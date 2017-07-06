@@ -1,0 +1,144 @@
+.field {
+  margin: auto;
+  padding: 1em;
+  width: calc(100% - 2em);
+
+  @media screen and (max-width: 414px) {
+    padding: 1em 0;
+    width: 100%;
+  }
+
+  & input {
+    background-color: $highlighted-background;
+    box-shadow: inset $page-background 0 1px 2px;
+    border: none;
+    color: $primary-font-color;
+    margin-top: 12px;
+    outline: none;
+    padding: 1em;
+    width: calc(100% - 2em);
+  }
+
+  & label {
+    color: $primary-font-color;
+    font-family: Roboto;
+    font-weight: 100;
+  }
+
+  & h2 {
+    color: white;
+  }
+}
+
+.actions {
+  border-radius: 3px;
+  margin: auto;
+  outline: none;
+  padding: 1em 0 0 0;
+  width: 60%;
+
+  @media screen and (max-width: 414px) {
+    width: 100%;
+  }
+
+  & input {
+    background-color: $highlighted-background;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 5px 6px 4px 0px rgba(0, 0, 0, 0.10);
+    color: $primary;
+    cursor: pointer;
+    display: block;
+    outline: none;
+    padding: 1em 1em;
+    width: 100%;
+  }
+
+
+  & :active {
+    background-color: $primary;
+    box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.10);
+    color: black;
+  }
+}
+
+.devise-header {
+  color: white;
+  font-family: Roboto;
+  font-size: 2em;
+  font-weight: 100;
+  text-align: center;
+}
+
+.devise-card {
+  background-color: $content-background;
+  border-radius: 3px;
+  box-shadow: 5px 6px 4px 0px rgba(0, 0, 0, 0.10);
+  margin:36px auto;
+  max-width: 450px;
+  padding: 0.5em 2em;
+  width: 60%;
+
+  & a {
+  }
+}
+
+.remember {
+  align-items: center;
+  color: $primary-font-color;
+  display: flex;
+  font-family: Roboto;
+  font-weight: 100;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+
+  & input {
+    margin-right: 5px;
+  }
+
+  & label {
+    margin-left: 5px;
+  }
+}
+
+.links-container {
+  margin: auto;
+  width: 60%;
+
+  @media screen and (max-width: 414px) {
+    width: 90%;
+  }
+}
+
+.devise-link {
+  margin: 12px 0 12px 0;
+  text-align: center;
+  width: 100%;
+
+  & a {
+    background-color: $highlighted-background;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 5px 6px 4px 0px rgba(0, 0, 0, 0.10);
+    color: $secondary;
+    cursor: pointer;
+    display: block;
+    font-family: Roboto;
+    font-size: 11px;
+    outline: none;
+    padding: 1em 1em;
+    text-align: center;
+    text-decoration: none;
+  }
+}
+
+.divider {
+  height: 1px;
+  border-bottom: 1px solid $secondary;
+  margin: 25px 0 25px 0;
+}
+
+.hints {
+  color: $primary-font-color;
+}

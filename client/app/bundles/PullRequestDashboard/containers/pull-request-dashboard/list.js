@@ -62,6 +62,8 @@ const styles = {
   }),
   titleContainer: css({
     backgroundColor: HEADER_BACKGROUND,
+    borderTopRightRadius: 3,
+    borderTopLeftRadius: 3,
     color: 'white',
     fontSize: '3vh',
     fontWeight: 100,

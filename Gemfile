@@ -34,6 +34,9 @@ gem 'redis', '~> 3.0'
 
 gem 'pundit'
 gem 'react_on_rails'
+gem 'devise'
+gem 'omniauth-github'
+gem 'gritter'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

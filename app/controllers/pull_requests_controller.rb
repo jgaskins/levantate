@@ -1,6 +1,6 @@
 class PullRequestsController < ApplicationController
   protect_from_forgery :except => [:payload]
-  #before_action :authenticate_user!, :except => [:payload]
+  before_action :authenticate_user!, :except => [:payload]
 
   def index
   end
@@ -45,12 +45,14 @@ class PullRequestsController < ApplicationController
       new_pr.repo = pr_params[:repo]
       new_pr.author = Engineer.find_or_create_by(login: pr_params[:author]) do |eng|
         eng.avatar_url = pr_params[:author_image_url]
+        eng.user = User.find_by(uid: pr_params[:author_github_id])
       end
     end
 
     @pr.title = pr_params[:title]
     @pr.reviewer = Engineer.find_or_create_by(login: pr_params[:reviewer]) do |eng|
       eng.avatar_url = pr_params[:reviewer_image_url]
+      eng.user = User.find_by(uid: pr_params[:reviewer_github_id])
     end
 
     @pr.save!
@@ -68,6 +70,7 @@ class PullRequestsController < ApplicationController
       r.pull_request = pr
       r.author = Engineer.find_or_create_by(login: review_params[:author]) do |eng|
         eng.avatar_url = review_params[:author_image_url]
+        eng.user = User.find_by(uid: review_params[:author_github_id])
       end
     end
 
