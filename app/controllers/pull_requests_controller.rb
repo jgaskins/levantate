@@ -24,6 +24,7 @@ class PullRequestsController < ApplicationController
   def payload
     raise "Signatures don't match!" unless verify_signature
 
+    binding.pry
     PullRequestOperations::AssessPayload.run(pr, payload_params, review)
 
     render json: {}, status: :ok
@@ -33,6 +34,8 @@ class PullRequestsController < ApplicationController
 
   def pr
     pr_params = payload_params.pull_request
+
+    return if pr_params[:github_id].nil?
 
     ## Remove after all PRs have been updated
     old_pr = PullRequest.where(number: pr_params[:number], github_id: nil)
@@ -62,7 +65,7 @@ class PullRequestsController < ApplicationController
   def review
     review_params = payload_params.review
 
-    return if review_params.empty?
+    return if review_params[:github_id].nil?
 
     rev = Review.find_or_create_by(github_id: review_params[:github_id]) do |r|
       r.submitted_at = review_params[:submitted_at]
