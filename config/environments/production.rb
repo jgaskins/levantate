@@ -5,9 +5,9 @@ Rails.application.configure do
   config.cache_classes = true
 
   config.action_cable.allowed_request_origins = [
-    'https://hidden-meadow-36735.herokuapp.com/'
+    'https://levantate.herokuapp.com/'
   ]
-  config.action_cable.url = 'wss://hidden-meadow-36735.herokuapp.com/cable'
+  config.action_cable.url = 'wss://levantate.herokuapp.com/cable'
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -66,7 +66,7 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = {
-    host: 'https://hidden-meadow-36735.herokuapp.com/',
+    host: 'https://levantate.herokuapp.com/',
     port: 3000
   }
 

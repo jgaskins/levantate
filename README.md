@@ -17,7 +17,7 @@ manage the life cycle of pull requests.
 - Go to the "Webhooks" tab in the left menu.
 - Click "Add Webhook".
 - Add the following "Payload URL":
-   - `https://hidden-meadow-36735.herokuapp.com/pull_requests/payload`
+   - `https://levantate.herokuapp.com/pull_requests/payload`
 - Change the "Content type" to: 
    - `application/x-www-form-urlencoded`
 - Copy `SECRET_TOKEN` from...
