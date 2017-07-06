@@ -77,7 +77,7 @@ class PullRequestsController < ApplicationController
     rev.body = review_params[:body]
     rev.state = review_params[:state]
 
-    rev.save
+    rev.save!
     rev
   end
 
