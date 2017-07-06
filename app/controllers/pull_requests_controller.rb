@@ -24,7 +24,6 @@ class PullRequestsController < ApplicationController
   def payload
     raise "Signatures don't match!" unless verify_signature
 
-    binding.pry
     PullRequestOperations::AssessPayload.run(pr, payload_params, review)
 
     render json: {}, status: :ok
