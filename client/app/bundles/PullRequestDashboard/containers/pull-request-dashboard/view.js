@@ -19,25 +19,25 @@ const View = ({ loading, pullRequests }) => {
   return (
     <div { ...styles.container }>
       <List
-        label="Ready For Review"
+        label="Needs Reviewing"
         loading={ loading }
         pullRequests={ filter(pullRequests, { state: 'review_ready' }) }
       />
 
       <List
-        label="Ready For Merge"
+        label="Approved"
         loading={ loading }
         pullRequests={ filter(pullRequests, { state: 'merge_ready' }) }
       />
 
       <List
-        label="In Review"
+        label="Currently In Review"
         loading={ loading }
         pullRequests={ filter(pullRequests, { state: 'in_review' }) }
       />
 
       <List
-        label="In Progress"
+        label="Work in Progress"
         loading={ loading }
         pullRequests={ filter(pullRequests, { state: 'in_progress' }) }
       />
