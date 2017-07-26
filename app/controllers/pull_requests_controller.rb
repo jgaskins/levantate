@@ -41,7 +41,7 @@ class PullRequestsController < ApplicationController
     old_pr.first.destroy if old_pr.any?
     ##
 
-    @pr = PullRequest.find_or_create_by(github_id: pr_params[:github_id]) do |new_pr|
+    @pr = PullRequest.find_or_initialize_by(github_id: pr_params[:github_id]) do |new_pr|
       new_pr.number = pr_params[:number]
       new_pr.url = pr_params[:url]
       new_pr.repo = pr_params[:repo]
@@ -66,7 +66,7 @@ class PullRequestsController < ApplicationController
 
     return if review_params[:github_id].nil?
 
-    rev = Review.find_or_create_by(github_id: review_params[:github_id]) do |r|
+    rev = Review.find_or_initialize_by(github_id: review_params[:github_id]) do |r|
       r.submitted_at = review_params[:submitted_at]
       r.url = review_params[:url]
       r.pull_request = pr
