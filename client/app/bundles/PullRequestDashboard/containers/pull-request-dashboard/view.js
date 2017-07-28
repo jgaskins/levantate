@@ -10,7 +10,7 @@ const filter = (pullRequests, { state }) => (
     .filter((pullRequest) => pullRequest.state === state)
     .sort((a, b) => (
       state === 'review_ready'
-        ? a.awaiting_review_since - b.awaiting_review_since
+        ? a.awaitingReviewSince - b.awaitingReviewSince
         : a.createdAt - b.createdAt
     ))
 );
