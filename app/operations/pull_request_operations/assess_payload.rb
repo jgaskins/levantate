@@ -28,7 +28,7 @@ module PullRequestOperations
         pr.unassign
       when 'closed'
         pr.close_pr
-      when 'open'
+      when 'opened'
         pr.open_pr
       when 'submitted'
         pr.approve if review_state == 'approved'

@@ -36,29 +36,34 @@ class PullRequestsController < ApplicationController
 
     return if pr_params[:github_id].nil?
 
-    ## Remove after all PRs have been updated
-    old_pr = PullRequest.where(number: pr_params[:number], github_id: nil)
-    old_pr.first.destroy if old_pr.any?
-    ##
+    author = Engineer.find_or_create_by(login: pr_params[:author]) do |eng|
+      eng.avatar_url = pr_params[:author_image_url]
+      eng.user = User.find_by(uid: pr_params[:author_github_id])
+    end
 
-    @pr = PullRequest.find_or_initialize_by(github_id: pr_params[:github_id]) do |new_pr|
-      new_pr.number = pr_params[:number]
-      new_pr.url = pr_params[:url]
-      new_pr.repo = pr_params[:repo]
-      new_pr.author = Engineer.find_or_create_by(login: pr_params[:author]) do |eng|
-        eng.avatar_url = pr_params[:author_image_url]
-        eng.user = User.find_by(uid: pr_params[:author_github_id])
+    if payload_params.action == 'opened'
+      PullRequest.create!(
+        author: author,
+        github_id: pr_params[:github_id],
+        number: pr_params[:number],
+        title: pr_params[:title],
+        url: pr_params[:url],
+        repo: pr_params[:repo]
+      )
+    end
+
+    pr = PullRequest.find_by(github_id: pr_params[:github_id])
+
+    pr.with_lock do
+      pr.reviewer = Engineer.find_or_create_by(login: pr_params[:reviewer]) do |eng|
+        eng.avatar_url = pr_params[:reviewer_image_url]
+        eng.user = User.find_by(uid: pr_params[:reviewer_github_id])
       end
+
+      pr.save!
     end
 
-    @pr.title = pr_params[:title]
-    @pr.reviewer = Engineer.find_or_create_by(login: pr_params[:reviewer]) do |eng|
-      eng.avatar_url = pr_params[:reviewer_image_url]
-      eng.user = User.find_by(uid: pr_params[:reviewer_github_id])
-    end
-
-    @pr.save!
-    @pr
+    pr
   end
 
   def review
@@ -76,10 +81,13 @@ class PullRequestsController < ApplicationController
       end
     end
 
-    rev.body = review_params[:body]
-    rev.state = review_params[:state]
+    rev.with_lock do
+      rev.body = review_params[:body]
+      rev.state = review_params[:state]
 
-    rev.save!
+      rev.save!
+    end
+
     rev
   end
 
