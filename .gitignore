@@ -8,4 +8,7 @@ node_modules
 # Generated js bundles
 /app/assets/webpack/*
 
+# Precompiled Assets
+public/assets/**
+
 dump.rdb
