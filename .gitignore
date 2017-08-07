@@ -9,6 +9,6 @@ node_modules
 /app/assets/webpack/*
 
 # Precompiled Assets
-public/assets/**
+#public/assets/**
 
 dump.rdb
