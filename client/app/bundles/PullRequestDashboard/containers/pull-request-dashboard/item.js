@@ -29,11 +29,6 @@ const getRepoAbbr = (repo) => {
   return abbr.toUpperCase();
 };
 
-const handleClick = (url) => () => {
-  const win = window.open(url, '_blank');
-  win.focus();
-};
-
 const Item = ({
   pullRequest: {
     author,
@@ -46,7 +41,7 @@ const Item = ({
     url,
   },
 }) => (
-  <span { ...styles.container } onClick={ handleClick(url) }>
+  <a { ...styles.container } href={ url } target="_blank">
     <div { ...styles.prContainer }>
       <p { ...styles.repo }>{ repo && getRepoAbbr(repo) }</p>
 
@@ -73,7 +68,7 @@ const Item = ({
         role="Reviewer"
       />
     </div>
-  </span>
+  </a>
 );
 
 Item.propTypes = {
